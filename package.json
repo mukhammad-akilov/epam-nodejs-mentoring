@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "npx nodemon",
     "build": "npx tsc",
-    "start": "npm run build && node build/index"
+    "start": "npm run build && node build/index",
+    "task1": "nodemon ./src/home-task-1/task1.ts"
   },
   "keywords": [],
   "author": "",
