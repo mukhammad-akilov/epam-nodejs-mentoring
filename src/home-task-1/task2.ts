@@ -1,6 +1,10 @@
-const csvtojson = require("csvtojson/v2");
-const fs = require("fs");
-const path = require("path");
+import csvtojson from "csvtojson";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 interface Book {
     Book: string;
@@ -15,9 +19,9 @@ const resultFilePath= path.join(__dirname, './result/result.txt');
 const csvReadStream = fs.createReadStream(csvFilePath);
 const resultWriteStream = fs.createWriteStream(resultFilePath);
 
-csvReadStream.on('data', (chunk: Buffer) => {
-    // console.log(chunk.toString());
-})
+// csvReadStream.on('data', (chunk: Buffer) => {
+//     // console.log(chunk.toString());
+// })
 
 const objLowerCaseKeys = (obj: Object) => {
     const formatedObject = Object.fromEntries(
