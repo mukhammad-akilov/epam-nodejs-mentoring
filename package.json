@@ -6,15 +6,22 @@
   "scripts": {
     "dev": "npx nodemon",
     "build": "npx tsc",
-    "start": "npm run build && node build/index"
+    "start": "npm run build && node build/index",
+    "home-task-2.1": "nodemon ./src/home-task-2/task1.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^4.17.15",
     "@types/node": "^18.11.18",
+    "@types/uuid": "^9.0.0",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuid": "^9.0.0"
   }
 }
