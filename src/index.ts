@@ -1,4 +1,13 @@
-import express from "express";
+import express, { Response } from "express";
+import {
+  ContainerTypes,
+  // Use this as a replacement for express.Request
+  ValidatedRequest,
+  // Extend from this to define a valid schema type/interface
+  ValidatedRequestSchema,
+  // Creates a validator that generates middlewares
+  createValidator,
+} from "express-joi-validation";
 import {
   autoSuggest,
   createUser,
@@ -7,11 +16,21 @@ import {
   getUserById,
   updateUser,
 } from "./home-task-2/controller/user";
+import { addSchema, updateSchema } from "./home-task-2/schema/user";
 import User from "./home-task-2/model/User";
 
 const serverPort = 8000;
 const app = express();
+const validator = createValidator();
 app.use(express.json());
+
+interface CraeteUserRequestSchema extends ValidatedRequestSchema {
+  [ContainerTypes.Fields]: {
+    login: string;
+    password: string;
+    age: number;
+  };
+}
 
 app.get("/api/users", (req, res) => {
   const usersList = getAllUsers();
@@ -28,37 +47,45 @@ app.get("/api/users/:id", (req, res) => {
   }
 });
 
-app.post("/api/users", (req, res) => {
-  try {
-    const user: User = req.body;
-    const newUser = createUser(user);
-    res.status(201).json(newUser);
-  } catch (error) {
-    let message;
-    if (error instanceof Error) {
-      message = error.message;
-    } else {
-      message = String(error);
+app.post(
+  "/api/users",
+  validator.body(addSchema),
+  (req: ValidatedRequest<CraeteUserRequestSchema>, res: Response) => {
+    try {
+      const user: Partial<User> = req.body;
+      const newUser = createUser(user);
+      res.status(201).json(newUser);
+    } catch (error) {
+      let message;
+      if (error instanceof Error) {
+        message = error.message;
+      } else {
+        message = String(error);
+      }
+      res.status(500).send(message);
     }
-    res.status(500).send(message);
   }
-});
+);
 
-app.put("/api/users", (req, res) => {
-  try {
-    const updatedUser: User = req.body;
-    updateUser(updatedUser);
-    res.status(200).json({ message: "User successfully updated" });
-  } catch (error) {
-    let message;
-    if (error instanceof Error) {
-      message = error.message;
-    } else {
-      message = String(error);
+app.put(
+  "/api/users",
+  validator.body(updateSchema),
+  (req: ValidatedRequest<CraeteUserRequestSchema>, res: Response) => {
+    try {
+      const updatedUser: User = req.body;
+      updateUser(updatedUser);
+      res.status(200).json({ message: "User successfully updated" });
+    } catch (error) {
+      let message;
+      if (error instanceof Error) {
+        message = error.message;
+      } else {
+        message = String(error);
+      }
+      res.status(500).send(message);
     }
-    res.status(500).send(message);
   }
-});
+);
 
 app.delete("/api/users/:id", (req, res) => {
   try {

@@ -12,12 +12,12 @@ export const getUserById = (id: string): User | undefined => {
   return selectedUser;
 };
 
-export const createUser = (user: User): User => {
+export const createUser = (user: Partial<User>): User => {
   const newUser: User = {
     id: uuidv4(),
-    login: user.login,
-    password: user.password,
-    age: user.age,
+    login: user.login!,
+    password: user.password!,
+    age: user.age!,
     isDeleted: false,
   };
 
@@ -50,7 +50,7 @@ export const deleteUser = (id: string): void => {
   setUsersList(filteredUsers);
 };
 
-export const autoSuggest = (login: string, limit: number): User[] => {
+export const autoSuggest = (login: string, limit: number = 10): User[] => {
   const autoSuggestedUsers = usersList.filter((user) =>
     user.login.includes(login)
   );

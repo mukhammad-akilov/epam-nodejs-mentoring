@@ -7,7 +7,7 @@
     "dev": "npx nodemon",
     "build": "npx tsc",
     "start": "npm run build && node build/index",
-    "home-task-2.1": "nodemon ./src/home-task-2/task1.ts"
+    "home-task-2": "nodemon ./src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "express": "^4.18.2",
+    "express-joi-validation": "^5.0.1",
+    "joi": "^17.7.0",
     "uuid": "^9.0.0"
   }
 }
