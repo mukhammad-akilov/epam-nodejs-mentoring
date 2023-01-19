@@ -1,6 +1,6 @@
-import User from "../model/User";
-import { usersList, setUsersList } from "../data/users.data";
-import { v4 as uuidv4 } from "uuid";
+import User from '../model/User';
+import { usersList, setUsersList } from '../data/users.data';
+import { v4 as uuidv4 } from 'uuid';
 
 export const getAllUsers = (): User[] => {
   const users = usersList.filter((user) => !user.isDeleted);
@@ -37,22 +37,32 @@ export const updateUser = (updatedUser: User): void => {
           login: updatedUser.login,
           password: updatedUser.password,
           age: updatedUser.age,
-        }
+        },
   );
 
   setUsersList(updatedUsers);
 };
 
 export const deleteUser = (id: string): void => {
-  const filteredUsers = usersList.map((user) =>
-    user.id !== id ? user : { ...user, isDeleted: true }
-  );
+  const filteredUsers = usersList.map((user) => (user.id !== id ? user : { ...user, isDeleted: true }));
   setUsersList(filteredUsers);
 };
 
 export const autoSuggest = (login: string, limit: number = 10): User[] => {
-  const autoSuggestedUsers = usersList.filter((user) =>
-    user.login.includes(login)
-  );
-  return autoSuggestedUsers.slice(0, limit);
+  const autoSuggestedUsers = usersList.filter((user) => user.login.includes(login));
+
+  const autoSuggestedUsersLimited = autoSuggestedUsers.slice(0, limit);
+  // Sort users by login
+  const sortedUsers = autoSuggestedUsersLimited.sort((a, b) => {
+    if (a.login > b.login) {
+      return 1;
+    }
+
+    if (a.login < b.login) {
+      return -1;
+    }
+    return 0;
+  });
+
+  return sortedUsers;
 };

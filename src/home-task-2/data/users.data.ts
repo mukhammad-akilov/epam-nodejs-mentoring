@@ -1,32 +1,32 @@
-import User from "../model/User";
+import User from '../model/User';
 
 export let usersList: User[] = [
   {
-    id: "1",
-    login: "user-1",
-    password: "some-password",
+    id: '1',
+    login: 'user-1',
+    password: 'some-password',
     age: 18,
     isDeleted: false,
   },
   {
-    id: "2",
-    login: "user-2",
-    password: "some-password2",
+    id: '2',
+    login: 'user-2',
+    password: 'some-password2',
     age: 19,
     isDeleted: false,
   },
   {
-    id: "3",
-    login: "user-3",
-    password: "some-password3",
-    age: 20,
+    id: '4',
+    login: 'user-4',
+    password: 'some-password4',
+    age: 21,
     isDeleted: false,
   },
   {
-    id: "4",
-    login: "user-4",
-    password: "some-password4",
-    age: 21,
+    id: '3',
+    login: 'user-3',
+    password: 'some-password3',
+    age: 20,
     isDeleted: false,
   },
 ];
