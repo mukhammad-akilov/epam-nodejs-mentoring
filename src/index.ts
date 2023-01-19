@@ -1,4 +1,4 @@
-import express, { Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import {
   ContainerTypes,
   // Use this as a replacement for express.Request
@@ -32,86 +32,82 @@ interface CraeteUserRequestSchema extends ValidatedRequestSchema {
   };
 }
 
-app.get('/api/users', (req, res) => {
-  const usersList = getAllUsers();
-  res.json(usersList);
-});
+const routeHandler = <T>(fn: (req: T, res: Response) => void) => {
+  return (req: T, res: Response, next: NextFunction) => {
+    try {
+      fn(req, res);
+    } catch (error) {
+      let message;
+      if (error instanceof Error) {
+        message = error.message;
+      } else {
+        message = String(error);
+      }
+      next(message);
+    }
+  };
+};
 
-app.get('/api/users/:id', (req, res) => {
-  const userId = req.params.id;
-  const user = getUserById(userId);
-  if (user !== undefined) {
-    res.json(user);
-  } else {
-    res.status(404).send('Not found');
-  }
-});
+app.get(
+  '/api/users',
+  routeHandler<Request>((req, res) => {
+    const usersList = getAllUsers();
+    res.json(usersList);
+  }),
+);
 
-app.post('/api/users', validator.body(addSchema), (req: ValidatedRequest<CraeteUserRequestSchema>, res: Response) => {
-  try {
+app.get(
+  '/api/users/:id',
+  routeHandler<Request>((req, res) => {
+    const userId = req.params.id;
+    const user = getUserById(userId);
+    if (user !== undefined) {
+      res.json(user);
+    } else {
+      res.status(404).send('Not found');
+    }
+  }),
+);
+
+app.post(
+  '/api/users',
+  validator.body(addSchema),
+  routeHandler<ValidatedRequest<CraeteUserRequestSchema>>((req, res) => {
     const user: Partial<User> = req.body;
     const newUser = createUser(user);
     res.status(201).json(newUser);
-  } catch (error) {
-    let message;
-    if (error instanceof Error) {
-      message = error.message;
-    } else {
-      message = String(error);
-    }
-    res.status(500).send(message);
-  }
-});
+  }),
+);
 
-app.put('/api/users', validator.body(updateSchema), (req: ValidatedRequest<CraeteUserRequestSchema>, res: Response) => {
-  try {
+app.put(
+  '/api/users',
+  validator.body(updateSchema),
+  routeHandler<ValidatedRequest<CraeteUserRequestSchema>>((req, res) => {
     const updatedUser: User = req.body;
     updateUser(updatedUser);
     res.status(200).json({ message: 'User successfully updated' });
-  } catch (error) {
-    let message;
-    if (error instanceof Error) {
-      message = error.message;
-    } else {
-      message = String(error);
-    }
-    res.status(500).send(message);
-  }
-});
+  }),
+);
 
-app.delete('/api/users/:id', (req, res) => {
-  try {
+app.delete(
+  '/api/users/:id',
+  routeHandler<Request>((req, res) => {
     const userId = req.params.id;
     deleteUser(userId);
     res.status(204).json({ message: 'User deleted successfully' });
-  } catch (error) {
-    let message;
-    if (error instanceof Error) {
-      message = error.message;
-    } else {
-      message = String(error);
-    }
-    res.status(500).send(message);
-  }
-});
+  }),
+);
 
 // Auto suggest users
-app.get('/api/users-auto-suggest', (req, res) => {
-  try {
+app.get(
+  '/api/users-auto-suggest',
+  routeHandler<Request>((req, res) => {
     const loginSearch = req.query.login as string;
     const loginLimit = req.query.limit as string;
     const usersList = autoSuggest(loginSearch, parseInt(loginLimit, 10));
     res.status(200).json(usersList);
-  } catch (error) {
-    let message;
-    if (error instanceof Error) {
-      message = error.message;
-    } else {
-      message = String(error);
-    }
-    res.status(500).send(message);
-  }
-});
+  }),
+);
 
 app.listen(serverPort, () => {
   console.log(`Listening from on port ${serverPort}`);
