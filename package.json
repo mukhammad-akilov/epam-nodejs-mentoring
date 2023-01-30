@@ -11,9 +11,10 @@
     "lint:audit": "npx eslint ./src",
     "lint:fix": "npx eslint ./src --fix",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "home-task1": "nodemon ./src/home-task-1/task1.ts",
-    "home-task2": "nodemon ./src/home-task-1/task2.ts",
-    "home-task-2": "nodemon ./src/index.ts"
+    "home-task-1.1": "nodemon ./src/home-task-1/task1.ts",
+    "home-task-1.2": "nodemon ./src/home-task-1/task2.ts",
+    "home-task-2": "nodemon ./src/index.ts",
+    "home-task-3": "nodemon ./src/home-task-3/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -31,13 +32,13 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
-<<<<<<< HEAD
+    "csvtojson": "^2.0.10",
     "express": "^4.18.2",
     "express-joi-validation": "^5.0.1",
     "joi": "^17.7.0",
+    "pg": "^8.9.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.28.0",
     "uuid": "^9.0.0"
-=======
-    "csvtojson": "^2.0.10"
->>>>>>> main
   }
 }

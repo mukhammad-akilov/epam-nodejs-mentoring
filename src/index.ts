@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express';
 import {
-  ContainerTypes,
   // Use this as a replacement for express.Request
   ValidatedRequest,
+  ContainerTypes,
   // Extend from this to define a valid schema type/interface
   ValidatedRequestSchema,
   // Creates a validator that generates middlewares
@@ -15,9 +15,9 @@ import {
   getAllUsers,
   getUserById,
   updateUser,
-} from './home-task-2/controller/user';
-import { addSchema, updateSchema } from './home-task-2/schema/user';
-import User from './home-task-2/model/User';
+} from './home-task-2/controller/user.js';
+import { addSchema, updateSchema } from './home-task-2/schema/user.js';
+import User from './home-task-2/model/User.js';
 
 const serverPort = 8000;
 const app = express();

@@ -1,4 +1,4 @@
-import User from '../model/User';
+import User from '../model/User.js';
 
 export let usersList: User[] = [
   {
