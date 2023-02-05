@@ -1,6 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelizeConnection from '../db/config.js';
-
 interface UserAttributes {
   id: number;
   login: string;
