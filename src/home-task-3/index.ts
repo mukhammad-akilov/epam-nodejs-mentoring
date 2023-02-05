@@ -1,27 +1,25 @@
 import express, { NextFunction, Request, Response } from 'express';
-// import {
-//   ContainerTypes,
-//   // Use this as a replacement for express.Request
-//   ValidatedRequest,
-//   // Extend from this to define a valid schema type/interface
-//   ValidatedRequestSchema,
-//   // Creates a validator that generates middlewares
-//   createValidator,
-// } from 'express-joi-validation';
+import { z, AnyZodObject } from 'zod';
 import { getAll, getUserById, createUser, updateUser, deleteUser, autoSuggest } from './controllers/user.js';
 import { UserInput } from './models/User.js';
+import { addSchema, updateSchema } from './schema/user.js';
+
 const serverPort = 8000;
 const app = express();
-// const validator = createValidator();
 app.use(express.json());
 
-// interface CraeteUserRequestSchema extends ValidatedRequestSchema {
-//   [ContainerTypes.Fields]: {
-//     login: string;
-//     password: string;
-//     age: number;
-//   };
-// }
+const validate = (schema: AnyZodObject) => async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await schema.parseAsync({
+      body: req.body,
+      query: req.query,
+      params: req.params,
+    });
+    return next();
+  } catch (error) {
+    return res.status(400).json(error);
+  }
+};
 
 const routeHandler = <T>(fn: (req: T, res: Response) => void) => {
   return (req: T, res: Response, next: NextFunction) => {
@@ -62,6 +60,7 @@ app.get(
 
 app.post(
   '/api/users',
+  validate(addSchema),
   routeHandler<Request>(async (req, res) => {
     const user: UserInput = req.body;
     const newUser = await createUser(user);
@@ -71,6 +70,7 @@ app.post(
 
 app.put(
   '/api/users',
+  validate(addSchema),
   routeHandler<Request>((req, res) => {
     const updatedUser: UserInput = req.body;
     updateUser(updatedUser);
