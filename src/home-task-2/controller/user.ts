@@ -1,5 +1,5 @@
-import User from '../model/User';
-import { usersList, setUsersList } from '../data/users.data';
+import User from '../model/User.js';
+import { usersList, setUsersList } from '../data/users.data.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export const getAllUsers = (): User[] => {
