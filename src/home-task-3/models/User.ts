@@ -5,9 +5,9 @@ interface UserAttributes {
   login: string;
   password: string;
   age?: Number;
-  is_deleted?: Boolean;
   created_at?: Date;
   updated_at?: Date;
+  deletedAt?: Date;
 }
 
 export interface UserInput extends Optional<UserAttributes, 'id'> {}
@@ -19,11 +19,11 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
   public login!: string;
   public password!: string;
   public age!: Number;
-  public is_deleted!: Boolean;
 
   // timestamps!
   public readonly created_at!: Date;
   public readonly updated_at!: Date;
+  public readonly deletedAt!: Date;
 }
 
 User.init(
@@ -45,12 +45,10 @@ User.init(
     age: {
       type: DataTypes.INTEGER,
     },
-    is_deleted: {
-      type: DataTypes.BOOLEAN,
-    },
   },
   {
     sequelize: sequelizeConnection,
+    paranoid: true,
     modelName: 'users',
   },
 );
