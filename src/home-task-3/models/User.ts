@@ -40,7 +40,7 @@ User.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      // unique: true,
     },
     age: {
       type: DataTypes.INTEGER,
