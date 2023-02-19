@@ -1,4 +1,3 @@
-import { Op } from 'sequelize';
 import User, { UserInput, UserOutput } from '../models/User.js';
 import UserService from '../services/user.js';
 
