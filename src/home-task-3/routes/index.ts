@@ -1,10 +1,19 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { AnyZodObject } from 'zod';
-import { getAll, getUserById, createUser, updateUser, deleteUser, autoSuggest } from '../controllers/user.js';
+import {
+  getAll,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
+  autoSuggest,
+  addToGroup,
+} from '../controllers/user.js';
 import { UserInput } from '../models/User.js';
 import { getAll as getAllGroups, getById, create, update, remove } from '../controllers/group.js';
 import { GroupInput } from '../models/Group.js';
 import { addSchema, updateSchema } from '../schema/user.js';
+import { UserGrouptInput } from '../models/UserGroup.js';
 
 const router = express.Router();
 
@@ -98,6 +107,20 @@ router.get(
   }),
 );
 
+router.post(
+  '/api/add-user-to-group',
+  routeHandler<Request>(async (req, res) => {
+    const payload: UserGrouptInput = req.body;
+    const userToGroup = await addToGroup(payload);
+    if (userToGroup) {
+      res.status(200).json({ message: 'User successfully added to the group' });
+    } else {
+      res.status(400).send('Error while added to the group');
+    }
+  }),
+);
+
+// Groups routes
 router.get(
   '/api/groups',
   routeHandler<Request>(async (req, res) => {
@@ -121,6 +144,7 @@ router.get(
 
 router.post(
   '/api/groups',
+  // validate(addGroupSchema)
   routeHandler<Request>(async (req, res) => {
     const group: GroupInput = req.body;
     const newGroup = await create(group);
@@ -130,7 +154,7 @@ router.post(
 
 router.put(
   '/api/groups',
-  // validate(updateSchema),
+  // validate(updateGroupSchema),
   routeHandler<Request>((req, res) => {
     const updatedGroup: GroupInput = req.body;
     update(updatedGroup);

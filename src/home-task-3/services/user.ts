@@ -1,5 +1,7 @@
 import { Op } from 'sequelize';
 import User, { UserInput, UserOutput } from '../models/User.js';
+import sequelizeConnection from '../db/config.js';
+import UserGroup, { UserGrouptInput } from '../models/UserGroup.js';
 
 class UserService {
   static getAll(): Promise<UserOutput[]> {
@@ -48,6 +50,17 @@ class UserService {
       },
     });
     return autoSuggestedUsers;
+  };
+
+  static addToGroup = async (payload: UserGrouptInput): Promise<UserGroup | undefined> => {
+    const t = await sequelizeConnection.transaction();
+    try {
+      const userToGroup = UserGroup.create(payload);
+      return userToGroup;
+      await t.commit();
+    } catch (error) {
+      await t.rollback();
+    }
   };
 }
 

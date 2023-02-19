@@ -1,4 +1,5 @@
 import User, { UserInput, UserOutput } from '../models/User.js';
+import UserGroup, { UserGrouptInput } from '../models/UserGroup.js';
 import UserService from '../services/user.js';
 
 export const getAll = (): Promise<UserOutput[]> => {
@@ -25,4 +26,9 @@ export const deleteUser = (id: string): void => {
 export const autoSuggest = (login: string, limit: number = 10): Promise<User[]> => {
   const autoSuggestedUsers = UserService.autoSuggest(login, limit);
   return autoSuggestedUsers;
+};
+
+export const addToGroup = (payload: UserGrouptInput): Promise<UserGroup | undefined> => {
+  const userToGroup = UserService.addToGroup(payload);
+  return userToGroup;
 };
