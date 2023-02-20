@@ -112,8 +112,8 @@ router.post(
   '/api/add-user-to-group',
   routeHandler<Request>(async (req, res) => {
     const payload: UserGrouptInput = req.body;
-    const userToGroup = await addToGroup(payload);
-    if (userToGroup) {
+    const isUserAddedToGroup = await addToGroup(payload);
+    if (isUserAddedToGroup) {
       res.status(200).json({ message: 'User successfully added to the group' });
     } else {
       res.status(400).send('Error while added to the group');
