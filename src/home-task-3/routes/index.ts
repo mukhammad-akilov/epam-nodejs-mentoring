@@ -13,6 +13,7 @@ import { UserInput } from '../models/User.js';
 import { getAll as getAllGroups, getById, create, update, remove } from '../controllers/group.js';
 import { GroupInput } from '../models/Group.js';
 import { addSchema, updateSchema } from '../schema/user.js';
+import { addSchema as addGroupSchema, updateSchema as updateGroupSchema } from '../schema/group.js';
 import { UserGrouptInput } from '../models/UserGroup.js';
 
 const router = express.Router();
@@ -144,7 +145,7 @@ router.get(
 
 router.post(
   '/api/groups',
-  // validate(addGroupSchema)
+  validate(addGroupSchema),
   routeHandler<Request>(async (req, res) => {
     const group: GroupInput = req.body;
     const newGroup = await create(group);
@@ -154,7 +155,7 @@ router.post(
 
 router.put(
   '/api/groups',
-  // validate(updateGroupSchema),
+  validate(updateGroupSchema),
   routeHandler<Request>((req, res) => {
     const updatedGroup: GroupInput = req.body;
     update(updatedGroup);
