@@ -15,6 +15,7 @@ import { GroupInput } from '../models/Group.js';
 import { addSchema, updateSchema } from '../schema/user.js';
 import { addSchema as addGroupSchema, updateSchema as updateGroupSchema } from '../schema/group.js';
 import { UserGrouptInput } from '../models/UserGroup.js';
+import Logger from '../lib/logger.js';
 
 const router = express.Router();
 
@@ -32,17 +33,11 @@ const validate = (schema: AnyZodObject) => async (req: Request, res: Response, n
 };
 
 const routeHandler = <T>(fn: (req: T, res: Response) => void) => {
-  return (req: T, res: Response, next: NextFunction) => {
+  return async (req: T, res: Response, next: NextFunction) => {
     try {
-      fn(req, res);
+      await fn(req, res);
     } catch (error) {
-      let message;
-      if (error instanceof Error) {
-        message = error.message;
-      } else {
-        message = String(error);
-      }
-      next(message);
+      next(error);
     }
   };
 };
