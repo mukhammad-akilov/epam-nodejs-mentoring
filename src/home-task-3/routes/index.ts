@@ -15,7 +15,6 @@ import { GroupInput } from '../models/Group.js';
 import { addSchema, updateSchema } from '../schema/user.js';
 import { addSchema as addGroupSchema, updateSchema as updateGroupSchema } from '../schema/group.js';
 import { UserGrouptInput } from '../models/UserGroup.js';
-import Logger from '../lib/logger.js';
 
 const router = express.Router();
 
