@@ -16,6 +16,10 @@ export const requestInfoMiddleware = (req: Request, res: Response, next: NextFun
 };
 
 export const handleErrorMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => {
-  Logger.error(error.message);
+  Logger.error(
+    `Error message: ${error.message}. \n Error method: ${req.method}. Error query: ${JSON.stringify(
+      req.query,
+    )} Error body: ${JSON.stringify(req.body)}`,
+  );
   res.status(500).send(error.message);
 };
