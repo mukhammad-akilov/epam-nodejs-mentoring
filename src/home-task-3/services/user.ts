@@ -14,7 +14,7 @@ class UserService {
     return User.findByPk(id);
   }
 
-  // @methodExucutionTimestamps()
+  @methodExucutionTimestamps()
   static create(userPayload: UserInput): Promise<User> {
     const newUser = User.create(userPayload);
     return newUser;
