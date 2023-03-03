@@ -15,7 +15,8 @@
     "home-task-1.2": "nodemon ./src/home-task-1/task2.ts",
     "home-task-2": "nodemon ./src/index.ts",
     "home-task-3": "nodemon ./src/home-task-3/index.ts",
-    "home-task-4": "nodemon ./src/home-task-3/index.ts"
+    "home-task-4": "nodemon ./src/home-task-3/index.ts",
+    "home-task-5": "nodemon ./src/home-task-3/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -43,6 +44,7 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.28.0",
     "uuid": "^9.0.0",
+    "winston": "^3.8.2",
     "zod": "^3.20.2"
   }
 }
