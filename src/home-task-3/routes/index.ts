@@ -15,6 +15,7 @@ import { GroupInput } from '../models/Group.js';
 import { addSchema, updateSchema } from '../schema/user.js';
 import { addSchema as addGroupSchema, updateSchema as updateGroupSchema } from '../schema/group.js';
 import { UserGrouptInput } from '../models/UserGroup.js';
+import { login } from '../controllers/auth.js';
 
 const router = express.Router();
 
@@ -163,6 +164,15 @@ router.delete(
     const id = req.params.id;
     remove(id);
     res.status(204).json({ message: 'Group deleted successfully' });
+  }),
+);
+
+router.post(
+  '/api/login',
+  routeHandler<Request>((req, res) => {
+    console.log(req.body, req.path);
+    const token = login();
+    res.status(200).json({ access_token: token });
   }),
 );
 
