@@ -1,16 +1,6 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-dotenv.config();
+import { loginResponse } from '../services/auth.js';
+import AuthService from '../services/auth.js';
 
-export const login = (): string => {
-  const accessToken = jwt.sign(
-    {
-      username: 'Akilov',
-    },
-    `${process.env.ACCESS_TOKEN_SECRET}`,
-    { expiresIn: '5m' },
-  );
-
-  return accessToken;
+export const login = (login: string, password: string): Promise<loginResponse> => {
+  return AuthService.loginUser(login, password);
 };

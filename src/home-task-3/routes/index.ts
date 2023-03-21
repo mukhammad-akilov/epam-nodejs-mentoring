@@ -169,10 +169,14 @@ router.delete(
 
 router.post(
   '/api/login',
-  routeHandler<Request>((req, res) => {
+  routeHandler<Request>(async (req, res) => {
     console.log(req.body, req.path);
-    const token = login();
-    res.status(200).json({ access_token: token });
+    const loginResult = await login(req.body.login, req.body.password);
+    if (loginResult.success) {
+      res.status(200).json({ 'access-token': loginResult.message });
+    } else {
+      res.status(loginResult.statusCode).json({ 'access-token': loginResult.message });
+    }
   }),
 );
 
