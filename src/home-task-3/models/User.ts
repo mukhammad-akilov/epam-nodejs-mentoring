@@ -1,5 +1,6 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelizeConnection from '../db/config.js';
+import bcrypt from 'bcrypt';
 interface UserAttributes {
   id: number;
   login: string;
@@ -36,6 +37,7 @@ User.init(
     login: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
@@ -51,5 +53,16 @@ User.init(
     modelName: 'users',
   },
 );
+
+User.beforeCreate(async (user, options) => {
+  try {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    user.password = hashedPassword;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
+});
 
 export default User;

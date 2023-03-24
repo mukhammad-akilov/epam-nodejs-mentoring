@@ -1,5 +1,9 @@
 import { Response, Request, NextFunction } from 'express';
 import Logger from '../lib/logger.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const requestInfoMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const requestInfo = {
@@ -22,4 +26,20 @@ export const handleErrorMiddleware = (error: Error, req: Request, res: Response,
     )} Error body: ${JSON.stringify(req.body)}`,
   );
   res.status(500).send(error.message);
+};
+
+export const verifyJWT = (req: Request, res: Response, next: NextFunction) => {
+  if (req.path === '/api/login') {
+    return next();
+  }
+
+  const authHeader = req.headers['authorization'];
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Not authorized' });
+  }
+  const jwtToken = authHeader.split(' ')[1];
+  jwt.verify(jwtToken, `${process.env.ACCESS_TOKEN_SECRET}`, (err, decoded) => {
+    if (err) return res.status(403).json({ message: err.message });
+    next();
+  });
 };
