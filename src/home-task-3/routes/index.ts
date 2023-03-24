@@ -173,9 +173,9 @@ router.post(
     console.log(req.body, req.path);
     const loginResult = await login(req.body.login, req.body.password);
     if (loginResult.success) {
-      res.status(200).json({ 'access-token': loginResult.message });
+      res.status(200).json({ 'access-token': loginResult.accessToken });
     } else {
-      res.status(loginResult.statusCode).json({ 'access-token': loginResult.message });
+      res.status(loginResult.statusCode).json({ message: loginResult.message });
     }
   }),
 );

@@ -5,7 +5,8 @@ import jwt from 'jsonwebtoken';
 export interface loginResponse {
   success: boolean;
   statusCode: number;
-  message: string;
+  accessToken?: string;
+  message?: string;
 }
 class AuthService {
   static async loginUser(login: string, password: string): Promise<loginResponse> {
@@ -25,7 +26,7 @@ class AuthService {
         return {
           success: true,
           statusCode: 200,
-          message: accessToken,
+          accessToken: accessToken,
         };
       } else {
         // Password is incorrect
