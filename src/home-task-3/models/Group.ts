@@ -28,7 +28,7 @@ class Group extends Model<GroupAttributes, GroupInput> implements GroupAttribute
 Group.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },

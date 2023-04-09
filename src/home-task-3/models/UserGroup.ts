@@ -27,7 +27,7 @@ class UserGroup extends Model<UserGroupAttributes, UserGrouptInput> implements U
 UserGroup.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
       allowNull: false,
