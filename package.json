@@ -18,7 +18,7 @@
     "home-task-4": "nodemon ./src/home-task-3/index.ts",
     "home-task-5": "nodemon ./src/home-task-3/index.ts",
     "home-task-6": "nodemon ./src/home-task-3/server.ts",
-    "test": "jest --detectOpenHandles"
+    "home-task-7": "jest --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
