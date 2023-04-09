@@ -1,6 +1,15 @@
 import { request } from '../helper';
 import jwt from 'jsonwebtoken';
 
+const accessToken = jwt.sign(
+  {
+    id: 1,
+    login: "test-user",
+  },
+  `${process.env.ACCESS_TOKEN_SECRET}`,
+  { expiresIn: '5m' },
+);
+
 describe('User controller', () => {
   beforeEach(() => {
    console.log('Run before each test');
@@ -25,15 +34,6 @@ it('should log in', function(done) {
   });
 
   it('should get all users', function(done) {
-    const accessToken = jwt.sign(
-        {
-          id: 1,
-          login: "akilov",
-        },
-        `${process.env.ACCESS_TOKEN_SECRET}`,
-        { expiresIn: '5m' },
-    );
-
     request
       .get('/api/users')
       .set('Accept', 'application/json')
@@ -47,15 +47,6 @@ it('should log in', function(done) {
   });
 
   it('should get user by id', function(done) {
-    const accessToken = jwt.sign(
-        {
-          id: 1,
-          login: "akilov",
-        },
-        `${process.env.ACCESS_TOKEN_SECRET}`,
-        { expiresIn: '5m' },
-    );
-
     request
       .get('/api/users/17')
       .set('Accept', 'application/json')
@@ -69,15 +60,6 @@ it('should log in', function(done) {
   });
 
   it('should get auto suggests users', function(done) {
-    const accessToken = jwt.sign(
-        {
-          id: 1,
-          login: "akilov",
-        },
-        `${process.env.ACCESS_TOKEN_SECRET}`,
-        { expiresIn: '5m' },
-    );
-
     request
       .get('/api/users-auto-suggest?login=user&limit=4')
       .set('Accept', 'application/json')
@@ -91,15 +73,6 @@ it('should log in', function(done) {
   });
 
   it('should update user', function(done) {
-    const accessToken = jwt.sign(
-        {
-          id: 1,
-          login: "akilov",
-        },
-        `${process.env.ACCESS_TOKEN_SECRET}`,
-        { expiresIn: '5m' },
-    );
-
     request
       .put('/api/users')
       .send({
@@ -119,15 +92,6 @@ it('should log in', function(done) {
   });
 
   it('should add user to group', function(done) {
-    const accessToken = jwt.sign(
-        {
-          id: 1,
-          login: "akilov",
-        },
-        `${process.env.ACCESS_TOKEN_SECRET}`,
-        { expiresIn: '5m' },
-    );
-
     request
       .post('/api/add-user-to-group')
       .send({
@@ -145,14 +109,6 @@ it('should log in', function(done) {
   });
 
   it('should add user to DB', function(done) {
-    const accessToken = jwt.sign(
-        {
-          id: 1,
-          login: "akilov",
-        },
-        `${process.env.ACCESS_TOKEN_SECRET}`,
-        { expiresIn: '5m' },
-    );
 
     request
       .post('/api/users')
@@ -172,15 +128,6 @@ it('should log in', function(done) {
   });
 
   it('should delete user from DB', function(done) {
-    const accessToken = jwt.sign(
-        {
-          id: 1,
-          login: "akilov",
-        },
-        `${process.env.ACCESS_TOKEN_SECRET}`,
-        { expiresIn: '5m' },
-    );
-
     request
       .delete('/api/users/20')
       .set('Accept', 'application/json')
@@ -192,6 +139,5 @@ it('should log in', function(done) {
         done();
       });
   });
-  
 });
 
