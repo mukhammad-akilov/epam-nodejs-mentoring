@@ -11,10 +11,6 @@ const accessToken = jwt.sign(
 );
 
 describe('User controller', () => {
-  beforeEach(() => {
-   console.log('Run before each test');
-  });
-
 
 it('should log in', function(done) {
     request
@@ -140,4 +136,3 @@ it('should log in', function(done) {
       });
   });
 });
-
