@@ -1,7 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
 import Logger from '../lib/logger.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 dotenv.config();
 

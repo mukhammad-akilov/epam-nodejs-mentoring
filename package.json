@@ -17,7 +17,8 @@
     "home-task-3": "nodemon ./src/home-task-3/index.ts",
     "home-task-4": "nodemon ./src/home-task-3/index.ts",
     "home-task-5": "nodemon ./src/home-task-3/index.ts",
-    "home-task-6": "nodemon ./src/home-task-3/index.ts"
+    "home-task-6": "nodemon ./src/home-task-3/server.ts",
+    "home-task-7": "jest --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
@@ -25,18 +26,21 @@
   "devDependencies": {
     "@types/express": "^4.17.15",
     "@types/node": "^18.11.18",
+    "@types/supertest": "^2.0.12",
     "@types/uuid": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "eslint": "^8.32.0",
     "nodemon": "^2.0.20",
     "prettier": "^2.8.3",
+    "supertest": "^6.3.3",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.4"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",
+    "@types/jest": "^29.5.0",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/sequelize": "^4.28.14",
     "bcrypt": "^5.1.0",
@@ -45,11 +49,13 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-joi-validation": "^5.0.1",
+    "jest": "^29.5.0",
     "joi": "^17.7.0",
     "jsonwebtoken": "^9.0.0",
     "pg": "^8.9.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.28.0",
+    "ts-jest": "^29.0.5",
     "uuid": "^9.0.0",
     "winston": "^3.8.2",
     "zod": "^3.20.2"
